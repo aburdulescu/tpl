@@ -19,9 +19,16 @@ make install
 ```
 
 ## Usage
+
+Run the tool with `-h` to see the available options.
+
+### Examples
+
 You can find the files used here in the `example` directory.
 
 The syntax of the template file can be found [here](https://pkg.go.dev/text/template).
+
+#### Data file provided with `-d`
 
 - template file(`example.tpl`)
 
@@ -55,8 +62,6 @@ The answer to the "Ultimate Question to Life, the Universe, and Everything" is {
 tpl -t example.tpl -d example.json
 ```
 
-- output
-
 ```
 My name is Arthur Dent.
 My friends are:
@@ -70,4 +75,50 @@ My friends are:
 - Trillian
 
 The answer to the "Ultimate Question to Life, the Universe, and Everything" is 42.
+```
+
+#### Data file from `stdin`
+
+- template file(`example2.tpl`)
+
+```
+Name: {{.name}}
+Race: {{.race}}
+```
+
+- data file(`example2.json`)
+
+```
+{
+    "persons": [
+        {
+            "name": "Arthur Dent",
+            "race": "human"
+        },
+        {
+            "name": "Ford Prefect",
+            "race": "alien"
+        }
+    ]
+}
+```
+
+- run the tool and pass the data using [jq](https://stedolan.github.io/jq/)
+
+```
+jq ".persons[0]" | tpl -t example.tpl
+```
+
+```
+Name: Arthur Dent
+Race: human
+```
+
+```
+jq ".persons[1]" | tpl -t example.tpl
+```
+
+```
+Name: Ford Prefect
+Race: alien
 ```
