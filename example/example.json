@@ -1,0 +1,10 @@
+{
+    "name": "Arthur Dent",
+    "friends": [
+        "Ford Prefect",
+        "Zaphod Beeblebrox",
+        "Marvin",
+        "Trillian"
+    ],
+    "answer": 42
+}
