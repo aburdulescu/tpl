@@ -2,6 +2,7 @@ package main
 
 import (
 	"encoding/json"
+	"errors"
 	"flag"
 	"fmt"
 	"io/ioutil"
@@ -11,38 +12,43 @@ import (
 )
 
 func main() {
+	log.SetFlags(log.Lshortfile | log.Ltime | log.Lmicroseconds | log.LUTC)
 	var tplFile string
 	var dataFile string
 	flag.StringVar(&tplFile, "t", "", "path to template file")
-	flag.StringVar(&dataFile, "d", "", "path to data(JSON) file")
+	flag.StringVar(&dataFile, "d", "", "path to data(JSON) file(read from stdin if not specified)")
 	flag.Parse()
 	if tplFile == "" {
-		handle("template file wasn't provided")
+		handle(errors.New("template file wasn't provided"))
 	}
-	if tplFile == "" {
-		handle("data file wasn't provided")
+	var dataFileReader *os.File
+	if dataFile == "" {
+		dataFileReader = os.Stdin
+	} else {
+		f, err := os.Open(dataFile)
+		if err != nil {
+			handle(err)
+		}
+		defer f.Close()
+		dataFileReader = f
+	}
+	data := make(map[string]interface{})
+	dec := json.NewDecoder(dataFileReader)
+	if err := dec.Decode(&data); err != nil {
+		handle(err)
 	}
 	b, err := ioutil.ReadFile(tplFile)
 	if err != nil {
-		handle(err.Error())
+		handle(err)
 	}
 	tplFileContent := string(b)
-	t := template.Must(template.New("makefile").Parse(tplFileContent))
-	b, err = ioutil.ReadFile(dataFile)
-	if err != nil {
-		handle(err.Error())
-	}
-	data := make(map[string]interface{})
-	if err := json.Unmarshal(b, &data); err != nil {
-		handle(err.Error())
-	}
+	t := template.Must(template.New("tpl").Parse(tplFileContent))
 	if err := t.Execute(os.Stdout, data); err != nil {
-		log.Println(err)
-		handle(err.Error())
+		handle(err)
 	}
 }
 
-func handle(err string) {
+func handle(err error) {
 	fmt.Fprintln(os.Stderr, err)
 	os.Exit(1)
 }

@@ -1,0 +1,2 @@
+Name: {{.name}}
+Race: {{.race}}

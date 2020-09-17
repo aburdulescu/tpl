@@ -1,0 +1,12 @@
+{
+    "persons": [
+        {
+            "name": "Arthur Dent",
+            "race": "human"
+        },
+        {
+            "name": "Ford Prefect",
+            "race": "alien"
+        }
+    ]
+}
