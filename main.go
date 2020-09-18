@@ -11,13 +11,21 @@ import (
 	"text/template"
 )
 
+var version string
+
 func main() {
 	log.SetFlags(log.Lshortfile | log.Ltime | log.Lmicroseconds | log.LUTC)
 	var tplFile string
 	var dataFile string
+	var printVersion bool
 	flag.StringVar(&tplFile, "t", "", "path to template file")
 	flag.StringVar(&dataFile, "d", "", "path to data(JSON) file(read from stdin if not specified)")
+	flag.BoolVar(&printVersion, "v", false, "print version")
 	flag.Parse()
+	if printVersion {
+		fmt.Println(version)
+		return
+	}
 	if tplFile == "" {
 		handle(errors.New("template file wasn't provided"))
 	}
