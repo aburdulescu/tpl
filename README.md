@@ -28,7 +28,7 @@ You can find the files used here in the `example` directory.
 
 The syntax of the template file can be found [here](https://pkg.go.dev/text/template).
 
-#### Data file provided with `-d`
+#### Data file provided as argument
 
 - template file(`example.tpl`)
 
@@ -59,7 +59,7 @@ The answer to the "Ultimate Question to Life, the Universe, and Everything" is {
 - run the tool using the files above
 
 ```
-tpl -t example.tpl -d example.json
+tpl -t example.tpl example.json
 ```
 
 ```
