@@ -13,9 +13,7 @@ OR
 
 ### Install the tool
 ```
-git clone https://github.com/aburdulescu/tpl.git
-cd tpl
-make install
+go get github.com/aburdulescu/tpl
 ```
 
 ## Usage
