@@ -11,7 +11,7 @@ import (
 	"text/template"
 )
 
-var version string
+const version = "0.1"
 
 func main() {
 	log.SetFlags(log.Lshortfile | log.Ltime | log.Lmicroseconds | log.LUTC)
