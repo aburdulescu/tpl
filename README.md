@@ -3,15 +3,8 @@ Generate file based on a json data file and a template file
 
 ## Install:
 
-### Install go
-Use whatever method works for you:
-- on GNU/Linux, install the official package from your package repository
-
-OR
-
-- follow the instructions from the golang website [here](https://golang.org/doc/install)
-
-### Install the tool
+- Install golang(e.g. on Debian based distros: `sudo apt install golang`)
+- then run
 ```
 go get github.com/aburdulescu/tpl
 ```
